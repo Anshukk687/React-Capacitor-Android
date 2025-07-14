@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <div className="min-h-screen bg-pink-50 font-sans">
+    <div className="min-h-screen bg-pink-50 font-sans mb-12">
       <section className="bg-gradient-to-r from-pink-100 to-pink-200 text-center py-20 px-4">
         <h1 className="text-4xl md:text-5xl font-extrabold text-pink-700 mb-4">🌺 About FlowerApp</h1>
         <p className="text-lg text-pink-600 max-w-2xl mx-auto">

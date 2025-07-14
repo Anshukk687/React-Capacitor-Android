@@ -1,7 +1,7 @@
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-pink-50 font-sans">
+    <div className="min-h-screen bg-pink-50 font-sans mb-8">
       <section className="bg-gradient-to-r from-pink-100 to-pink-200 text-center py-20 px-4">
         <h2 className="text-4xl md:text-5xl font-extrabold text-pink-700 mb-4">🌸 Welcome to FlowerApp</h2>
         <p className="text-lg text-pink-600 max-w-xl mx-auto">
