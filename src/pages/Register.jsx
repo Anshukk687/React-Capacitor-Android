@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { Capacitor } from "@capacitor/core";
-import { Http } from '@capacitor-community/http';
+import { Http } from "@capacitor-community/http";
 
 export default function Login() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: ''
+    name: "",
+    email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -22,30 +22,34 @@ export default function Login() {
     const platform = Capacitor.getPlatform();
     console.log("Platform:", platform);
 
-    const apiUrl =
-      platform === "web"
-        ? "http://localhost:5000/api/auth/registerr"
-        : "http://10.0.2.2:5000/api/auth/registerr";
+    let apiUrl = "";
+    if (platform === "web") {
+      apiUrl = "http://localhost:5000/api/auth/registerr";
+    } else if (platform === "android") {
+      apiUrl = "http://10.0.2.2:5000/api/auth/registerr";
+    } else if (platform === "ios") {
+      apiUrl = "http://192.168.0.178:5000/api/auth/registerr";
+    }
 
     try {
       const res = await Http.request({
-        method: 'POST',
+        method: "POST",
         url: apiUrl,
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         params: {},
         data: formData,
       });
 
-      console.log('Response:', res);
+      console.log("Response:", res);
 
       if (res.status === 201) {
         alert("Message: " + res.data?.message);
         setFormData({
-          name: '',
-          email: '',
-          password: ''
+          name: "",
+          email: "",
+          password: "",
         });
       }
     } catch (error) {
@@ -57,7 +61,9 @@ export default function Login() {
   return (
     <div className="py-8 flex items-center justify-center bg-pink-50 min-h-[calc(100vh-64px)]">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-3xl font-bold text-pink-600 text-center mb-6">🌸 Register</h2>
+        <h2 className="text-3xl font-bold text-pink-600 text-center mb-6">
+          🌸 Register
+        </h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -91,7 +97,10 @@ export default function Login() {
           </button>
         </form>
         <p className="mt-4 text-center text-sm text-gray-600">
-          Already have an account? <a href="/login" className="text-pink-500 hover:underline">Login</a>
+          Already have an account?{" "}
+          <a href="/login" className="text-pink-500 hover:underline">
+            Login
+          </a>
         </p>
       </div>
     </div>

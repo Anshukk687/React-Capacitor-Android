@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Capacitor } from "@capacitor/core";
-import { Http } from '@capacitor-community/http';
+import { Http } from "@capacitor-community/http";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
@@ -14,23 +14,27 @@ export default function ContactForm() {
     const platform = Capacitor.getPlatform();
     console.log("Platform:", platform);
 
-    const apiUrl =
-      platform === "web"
-        ? "http://localhost:5000/api/auth/contact"
-        : "http://10.0.2.2:5000/api/auth/contact";
+    let apiUrl = "";
+    if (platform === "web") {
+      apiUrl = "http://localhost:5000/api/auth/contact";
+    } else if (platform === "android") {
+      apiUrl = "http://10.0.2.2:5000/api/auth/contact";
+    } else if (platform === "ios") {
+      apiUrl = "http://192.168.0.178:5000/api/auth/contact";
+    }
 
     try {
       const res = await Http.request({
-        method: 'POST',
+        method: "POST",
         url: apiUrl,
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         params: {},
         data: { name, email, phoneNumber, description },
       });
 
-      console.log('Response:', res);
+      console.log("Response:", res);
 
       if (res.status === 201) {
         alert("Message: " + res.data?.message);
@@ -48,9 +52,12 @@ export default function ContactForm() {
   return (
     <div className="min-h-screen bg-pink-50 font-sans py-10 px-4">
       <section className="bg-gradient-to-r from-pink-100 to-pink-200 text-center py-12 rounded-lg shadow mb-10">
-        <h1 className="text-4xl font-extrabold text-pink-700 mb-2">🌼 Contact Us</h1>
+        <h1 className="text-4xl font-extrabold text-pink-700 mb-2">
+          🌼 Contact Us
+        </h1>
         <p className="text-pink-600 max-w-xl mx-auto">
-          Got questions, suggestions, or floral love to share? Fill out the form and we’ll get back to you!
+          Got questions, suggestions, or floral love to share? Fill out the form
+          and we’ll get back to you!
         </p>
       </section>
 
