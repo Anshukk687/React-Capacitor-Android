@@ -57,7 +57,7 @@ export default function ContactForm() {
         </h1>
         <p className="text-pink-600 max-w-xl mx-auto">
           Got questions, suggestions, or floral love to share? Fill out the form
-          and we’ll get back to you!
+          and we’ll get back to you!!
         </p>
       </section>
 
