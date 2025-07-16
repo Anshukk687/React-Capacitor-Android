@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { Capacitor } from "@capacitor/core";
-import { Http } from '@capacitor-community/http';
-import { Preferences } from '@capacitor/preferences';
+import { Http } from "@capacitor-community/http";
+import { Preferences } from "@capacitor/preferences";
 
 export default function Login() {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -20,34 +20,40 @@ export default function Login() {
     e.preventDefault();
 
     const platform = Capacitor.getPlatform();
-    const apiUrl =
-      platform === "web"
-        ? "http://localhost:5000/api/auth/loginn"
-        : "http://10.0.2.2:5000/api/auth/loginn";
+    console.log("Platform:", platform);
+
+    let apiUrl = "";
+    if (platform === "web") {
+      apiUrl = "http://localhost:5000/api/auth/loginn";
+    } else if (platform === "android") {
+      apiUrl = "http://10.0.2.2:5000/api/auth/loginn";
+    } else if (platform === "ios") {
+      apiUrl = "http://192.168.0.178:5000/api/auth/loginn";
+    }
 
     try {
       const res = await Http.request({
-        method: 'POST',
+        method: "POST",
         url: apiUrl,
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         params: {},
-        data: formData
+        data: formData,
       });
 
-      console.log('Response:', res);
+      console.log("Response:", res);
 
       if (res.status === 200 && res.data?.user) {
         alert("Login Successfully!");
         await Preferences.set({
-          key: 'user',
+          key: "user",
           value: JSON.stringify(res.data.user),
         });
 
-        window.location.href = '/';
+        window.location.href = "/";
 
-        setFormData({ email: '', password: '' });
+        setFormData({ email: "", password: "" });
       } else {
         alert("Login failed. Please check your credentials.");
       }
@@ -60,7 +66,9 @@ export default function Login() {
   return (
     <div className="py-8 flex items-center justify-center bg-pink-50 min-h-[calc(100vh-64px)]">
       <div className="bg-white p-4 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-3xl font-bold text-pink-600 text-center mb-6">🌸 Login</h2>
+        <h2 className="text-3xl font-bold text-pink-600 text-center mb-6">
+          🌸 Login
+        </h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <input
             type="email"
@@ -86,7 +94,10 @@ export default function Login() {
           </button>
         </form>
         <p className="mt-4 text-center text-sm text-gray-600">
-          Don't have an account? <a href="/register" className="text-pink-500 hover:underline">Register</a>
+          Don't have an account?{" "}
+          <a href="/register" className="text-pink-500 hover:underline">
+            Register
+          </a>
         </p>
       </div>
     </div>
