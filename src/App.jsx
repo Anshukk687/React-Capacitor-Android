@@ -6,10 +6,14 @@ import About from "./pages/About";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Verify from "./pages/Verify";
+
+import AppDeepLinkHandler from "./components/AppDeepLinkHandler";
 
 function App() {
   return (
     <Router>
+      <AppDeepLinkHandler />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -17,6 +21,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/verify" element={<Verify />} />
       </Routes>
       <Footer />
     </Router>
